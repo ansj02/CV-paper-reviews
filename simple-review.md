@@ -118,11 +118,15 @@ pyramid feature map, iterative architecture, coarse-to-fine method
 #### Details
 ![image](https://user-images.githubusercontent.com/67745456/150994219-c4a00faf-739e-4bc1-a51e-30958e56ab5b.png)
 
+image pair가 siamese CNN feature extractor에 input으로 들어가고 extractor의 각 단계에서 fine~coarse하게 구성된 pyramid feature map을 얻는다. 
 
+coarsest feature map부터 차례대로 correspondence map을 만들어 다음 level의 source feature map을 warp시키고 다음 correpondence module에 warped source feature map, target feature map, 전 level correspondence map을 dimension 방향으로 concatenation 하여 전달한다.
 
+위의 연산을 finest feature map까지 반복하고 마지막 finest 영역의 dense correspondence map과 matchability map을 얻는다.
 
+투박한 영역에서부터 조금씩 source를 target으로 matching 시켜 matching 정확도를 높인다. 
 
-
+training에서는 ground truth dense correspondence map과의 차이를 줄이고 matchability 영역의 차이를 줄이는 방향으로 update된다.
 
 
 
