@@ -71,6 +71,30 @@ spatially invariance를 이용해야하는 tasks (ex.찌그러진 이미지 구�
 ### 3. Neighbourhood Consensus Networks
 
 #### Introduction
+matching problem에서 local patch descriptors을 이용해 individual image features를 matching하는 방법은 textureless region이나 repetitive pattern이 많은 이미지 처리에 대해 자신의 patch와 근처의 patch의 차이를 구분하지 못하는 근본적인 한계가 있다.
 #### Contribution
+4D CNN으로 구성된 dense matching과 local geometric constraints learning을 위한 neighbourhood consensus network
+
+image pair의 negative, positive 구분 정도의 weakly supervised loss로 처음부터 학습가능한 network
+
+category level과 instance level matching 둘 다에서 넓은 범위의 matching tasks에서 활용가능한 model
+
 #### Key ideas
+4D correlation map, 4D convolution layer, soft mutual nearest neighbour filter
+
 #### details
+![image](https://user-images.githubusercontent.com/67745456/150980399-7c28bbcd-0a07-44d1-a2b0-789a25e327fe.png)
+
+두 이미지의 feature map을 4D correlation layer에서 input으로 받아 4D correlation map을 만든다.
+
+4D correlation map은 soft mutual nearest neighbour filter를 거쳐 상호간의 matching되지 않는 점들의 value를 떨어트리고 neighbourhood consensus network를 거쳐 high confidence score를 가진 match로부터 주변 match들이 information을 얻을 수 있게 하고 다시 soft mutual nearest neighbour filter를 거쳐 최종적인 4D dense correlation map을 얻는다. 
+
+![image](https://user-images.githubusercontent.com/67745456/150986815-bb47c94c-94c1-4914-9f08-d9b83a7893b4.png)
+
+이때, neighbourhood consensus network의 4D convolution layer는 서로 근처의 matching 정보를 확인하는 역활을 하고 2D convolution layer처럼 점점 깊어지며 점점 넓은 범위의 정보를 이용할 수 있게 된다.
+
+training은 positive image pair에서는 mean matching score가 높은 값을 가지도록 negative image pair에서는 mean matching score가 낮은 값을 가지도록 update를 진행한다.
+
+
+
+
