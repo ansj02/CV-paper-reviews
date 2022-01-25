@@ -96,5 +96,57 @@ category level과 instance level matching 둘 다에서 넓은 범위의 matchin
 training은 positive image pair에서는 mean matching score가 높은 값을 가지도록 negative image pair에서는 mean matching score가 낮은 값을 가지도록 update를 진행한다.
 
 
+### 4. DGC-Net: Dense Geometric Correspondence Network
+#### Introduction
+matching problem에서 pixel-wise correspondence field를 얻는 방법은 크게
+
+(i) image pair에 대해 feature descriptors를 적용하여 얻은 match keypoints의 주변에서 match를 시켜 얻은 sparse map을 통해 pixel-wise correspondences를 얻는 방법,
+(ii) image patches를 비교하여 feature space로부터 바로 dense correspondences를 얻는 방법
+
+두 가지로 나눌 수 있다. 그러나 (i) 방법은 sparse map에 의존하기 때문에 충분한 key point를 찾지 못할 수 있고 (ii) 방법은 멀리 떨어진 point간의 correspondence, large transformation을 처리하지 못한다는 한계점이 있다.
+
+#### Contribution
+strong geometric transformations를 이용하여 pixel-wise dense correspondence map을 만들 수 있는 end-to-end CNN-based method
+
+synthetic transformations를 이용한 unsupervised learning만으로 real data에 대해 잘 작동할 수 있는 network model
+
+original DGC-Net을 수정하여 low confidence score를 가진 tentative correspondence를 제거하고 계산 효율을 높였다.
+
+#### Key ideas
+pyramid feature map, iterative architecture, coarse-to-fine method
+
+#### Details
+![image](https://user-images.githubusercontent.com/67745456/150994219-c4a00faf-739e-4bc1-a51e-30958e56ab5b.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
