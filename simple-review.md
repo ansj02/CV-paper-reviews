@@ -8,8 +8,8 @@
 ### II. representation learning
 1. A Simple Framework for Contrastive Learning of Visual Representations
 2. Momentum Contrast for Unsupervised Visual Representation Learning
-3. Exploring Simple Siamese Representation Learning
-4. Bootstrap your own latent: A new approach to self-supervised Learning
+3. Bootstrap your own latent: A new approach to self-supervised Learning
+4. Exploring Simple Siamese Representation Learning
 ### III. image transformer
 1. An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale
 2. COTR: Correspondence Transformer for Matching Across Images
@@ -129,12 +129,91 @@ coarsest feature map부터 차례대로 correspondence map을 만들어 다음 l
 training에서는 ground truth dense correspondence map과의 차이를 줄이고 matchability 영역의 차이를 줄이는 방향으로 update된다.
 
 
+### 5. GLU-Net: Global-Local Universal Network for Dense Flow and Correspondences
+
+#### Introduction
+estimating correspondence problem은 geometric matching, optical flow, semantic matching같은 다양한 tastks에서 사용될 수 있지만 대부분의 current methods는 일반적인 correspondence problem과 크게 관련되지 않은 특별한 구조를 사용해 한 가지씩만을 다룬다.
+
+optical flow같은 small displacements를 예측하는 architecture는 large viewpoints changes를 예측하지 못하고 반대로 geometric, semantic matching을 수행하는 architecture는 longrange matches는 처리할 수 있지만 high resolution에서 correlation layer를 적용시킬 수 없다.
+#### Contribution
+geometric matching, semantic matching, optical flow에서 모두 활용될 수 있는 single unified architecture
+
+large, small displacements를 모두 다룰 수 있도록 global, local correlation layer를 적절히 조합한 network
+
+global correlation layer를 사용함으로써 생기는 fixed input resolution 문제를 피하기 위한 adaptive resolution strategy
+
+synthetic warps of real images에 의한 self-supervised learning
+
+
+#### Key ideas
+pyramid feature map, coarse-to-fine method, using both global and local correlation
+
+#### Details
+![image](https://user-images.githubusercontent.com/67745456/151071387-3b312854-0f97-415b-921b-c650372c2ec9.png)
+
+
+## II. representation learning
+### 1. A Simple Framework for Contrastive Learning of Visual Representations
+#### Introduction
+#### Contribution
+#### Key ideas
+#### Details
+![image](https://user-images.githubusercontent.com/67745456/151148509-a8a3e80c-3004-4ae0-aeac-17cdb73cd6f0.png)
+
+
+### 2. Momentum Contrast for Unsupervised Visual Representation Learning
+#### Introduction
+#### Contribution
+#### Key ideas
+#### Details
+![image](https://user-images.githubusercontent.com/67745456/151148885-69082d41-4ddc-402e-bcd0-8c0722339572.png)
+![image](https://user-images.githubusercontent.com/67745456/151148894-73173df2-a078-4ba5-b0ab-3b010f8d8b64.png)
 
 
 
+### 3. Bootstrap your own latent: A new approach to self-supervised Learning
+#### Introduction
+#### Contribution
+#### Key ideas
+#### Details
+![image](https://user-images.githubusercontent.com/67745456/151149715-83e224d6-6d45-4f6f-9232-0ed6de2d8519.png)
+
+
+### 4. Exploring Simple Siamese Representation Learning
+#### Introduction
+#### Contribution
+#### Key ideas
+#### Details
+![image](https://user-images.githubusercontent.com/67745456/151149553-ac1a666f-b05b-44d0-bf0e-e79c8807ccd8.png)
+![image](https://user-images.githubusercontent.com/67745456/151149581-a9def428-2e67-4c64-b370-a6e0790c314e.png)
 
 
 
+## III. image transformer
+### 1. An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale
+#### Introduction
+#### Contribution
+#### Key ideas
+#### Details
+![image](https://user-images.githubusercontent.com/67745456/151150710-22beb005-4b8b-4788-88be-cb9e0655e06b.png)
+
+
+### 2. COTR: Correspondence Transformer for Matching Across Images
+#### Introduction
+#### Contribution
+#### Key ideas
+#### Details
+![image](https://user-images.githubusercontent.com/67745456/151150754-d43de8bd-a108-4354-85f0-957a29a5e05b.png)
+![image](https://user-images.githubusercontent.com/67745456/151150767-af3ed24d-a370-4ca9-8fcf-b3fc77094f84.png)
+
+
+### 3. LoFTR: Detector-Free Local Feature Matching with Transformers
+#### Introduction
+#### Contribution
+#### Key ideas
+#### Details
+![image](https://user-images.githubusercontent.com/67745456/151150791-701e39b6-ccfc-4e63-acdb-3a4612531cd5.png)
+![image](https://user-images.githubusercontent.com/67745456/151150800-825a2f37-d7ce-4388-81f5-ee238906c576.png)
 
 
 
