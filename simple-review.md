@@ -172,55 +172,102 @@ augmentation으로는 random cropping과 random color distortion을 같이 사�
 ### 2. Momentum Contrast for Unsupervised Visual Representation Learning
 #### Introduction
 unsupervised representation learning이 nlp분야에서는 상당히 성공적으로 사용되고 있지만 computer vision 분야는 여전히 supervised pre-training 방식이 우세하다. 최근 contrastive learning을 사용한 방식으로 진전이 있었지만 negative sample을 제공하는 방식에서 large and consistent한 dictionary를 제공하지 못했다.
-대표적으로 simCLR은 batch size에 dictionary size가 종속되었고 memory size에 제약을 받았고 memory bank방식은 training 중에 dictionary 내부의 sample의 representation을 추출하는 model이 바뀌며 일관된 training이 힘들었다.
+대표적으로 SimCLR은 batch size에 dictionary size가 종속되었고 memory size에 제약을 받았고 memory bank방식은 training 중에 dictionary 내부의 sample의 representation을 추출하는 model이 바뀌며 일관된 training이 힘들었다.
 #### Contribution
+a way of building large and consistent dictionaries for unsupervised learning with a contrastive loss
 #### Key ideas
+dictionary as a queue of data samples, momentum encoder
 #### Details
 ![image](https://user-images.githubusercontent.com/67745456/151148885-69082d41-4ddc-402e-bcd0-8c0722339572.png)
+
+일반적인 contrastive learning의 방식을 따르지만 key views를 처리하는 encoder가 loss에 의해 학습되지 않고 query encoder의 momentum에 의해 학습된다는 점과 key encoder의 결과가 queue에 저장되어 일정한 size의 negative samples로 학습에 활용된다는 점이 일반적인 방식과의 차이점이다.
+
 ![image](https://user-images.githubusercontent.com/67745456/151148894-73173df2-a078-4ba5-b0ab-3b010f8d8b64.png)
 
 
 
 ### 3. Bootstrap your own latent: A new approach to self-supervised Learning
 #### Introduction
+representation learning 분야에서 contrastive methods가 좋은 성능을 보여주었지만 carful treatment of negative pairs가 필요했기 때문에 이를 위해 large batch size나 memory bank나 customized mining strategy같은 별도의 처리법이 필요했고 performance도 image augmentation 방법에 크게 의존했다.
 #### Contribution
+negative pair를 사용하지 않아도 collapsed representation(모든 input에 대해 같은 상수를 출력하는 등의 잘못된 representation)을 학습하지 않는 method
+
+contrastive methods에 비해 batch size나 augmentation 선택에 자유롭고 더 좋은 성능을 내는 method
+
 #### Key ideas
+training on positive pairs only, momentum learning(moving exponential average), asymmetric architecture with predictor
 #### Details
 ![image](https://user-images.githubusercontent.com/67745456/151149715-83e224d6-6d45-4f6f-9232-0ed6de2d8519.png)
 
+feature extractor(CNN), projector(MLP), predictor(MLP)로 이루어진 online network와 feature extractor(CNN), projector(MLP)로만 이루어져 있고 출력단에 stop gradient가 적용된 target network에 각각 하나의 image에 다른 augmentation을 적용하여 만든 두 view를 하나 씩 집어넣는다.
+
+두 network의 output의 distance를 loss로 우리의 목적인 downstream task에서 활용가능한 feature extractor를 가진 online network의 학습을 진행한다. 이때, target network는 loss에 의한 학습이 아닌 online network의 feature extractor와 projector의 weights의 moving exponential average로 갱신되어 학습된다.
+
+여기서 저자들은 두 network가 같은 방향으로 학습되지 않기 때문에 collapsed representation을 학습하지 않고 asymmetric한 network 구조가 collapsed representation을 막는데에 중요한 역활을 한다고 말한다.
 
 ### 4. Exploring Simple Siamese Representation Learning
 #### Introduction
+
+representation learning에는 다양한 방법에 의한 꾸준한 발전이 있었고 대부분의 경우 siamese구조의 network가 활용되었다. siamese구조의 network는 all outputs collapsing to a constant에 대한 위험이 있고 이를 해결하기 위해 SimCLR, SwAV, BYOL 등의 방법에서 다양한 architecture를 이용한 해결법이 제시되었고 각각 contrastive learning의 negative sample에 의한 제약, momentum learning에 의한 학습 속도 저하 등의 문제가 있었고 위의 방법론들에 아이디어를 얻어 그들의 필요한 부분만을 남긴 simple한 model을 설계하였다.
+
 #### Contribution
+a simple siamese network model for representation learning, which uses no negative pairs and momentum learning
 #### Key ideas
+training on positive pairs only, stop gradient, weights share,asymmetric architecture with predictor
 #### Details
 ![image](https://user-images.githubusercontent.com/67745456/151149553-ac1a666f-b05b-44d0-bf0e-e79c8807ccd8.png)
-![image](https://user-images.githubusercontent.com/67745456/151149581-a9def428-2e67-4c64-b370-a6e0790c314e.png)
 
+BYOL구조에서 momentum learning을 쓰지 않고 바로 weights share한 구조다.
+
+저자들은 BYOL에서 momentum learning은 collapsing을 막는데 직접적인 역활을 하지 않는다고 말했고 asymmetric구조가 중요하다고 말했다.
+
+![image](https://user-images.githubusercontent.com/67745456/151149581-a9def428-2e67-4c64-b370-a6e0790c314e.png)
 
 
 ## III. image transformer
 ### 1. An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale
 #### Introduction
+self attention based architecture인 transformer가 nlp분야에서 큰 성공을 거두었지만 여전히 computer vision분야에서는 convolutional architecture가 지배적으로 사용되고 있다. transformer로 covolutional architecture을 대체하거나 조합하기 위한 다양한 시도가 있었지만 아직까진 고전적인 ResNet base의 방법이 state of the art를 차지하고 있다.
+
+transformer based model은 CNN 특유의 inductive biases가 부족하기 때문에 적은 양의 data에서 학습이 잘 이루어지지 않았지만 많은 양의 data에서 오히려 고전적인 방법을 뛰어넘는 성능을 보이는 것을 확인했다.
 #### Contribution
+CNN에 의존하지 않는 transformer module만을 이용하여 classification tasks를 높은 성능으로 수행하는 model
 #### Key ideas
+transformer, sequences of image patches, 2D patch to 1D vector
 #### Details
 ![image](https://user-images.githubusercontent.com/67745456/151150710-22beb005-4b8b-4788-88be-cb9e0655e06b.png)
 
+하나의 image를 word 역활을 할 여러 개의 정해진 크기 PxP의 patchs로 나누고 각 patch를 linear projection을 통해 1D vector로 만들고 position embedding을 더한 결과들의 모임 sequence를 transformer module을 통해 self attention 시킨다. transformer의 output에 MLP를 통해 classification을 수행한다.
 
 ### 2. COTR: Correspondence Transformer for Matching Across Images
 #### Introduction
+finding correspondence problem을 수행하기 위한 방법은 크게 (i) image pair의 spase keypoints를 찾아 match를 수행하는 방법과 (ii) image pair의 전체적인 dense correspondence를 얻는 방법으로 나눌 수 있다.
+(i)의 방법은 large displacements 상황의 멀리 떨어진 points의 correspondence를 얻을 수 있지만 local feature에 의존하기 때문에 texture-less area에서 잘 작동하지 않을 수 있고 필요한 point의 match를 얻을 수 없을 수도 있다. (ii)의 방법은 context를 활용하여 texture-less area같은 구분이 힘든 region의 correspondece도 얻을 수 있고 arbitrary location의 correspondence를 얻을 수 있지만 주로 small dispacements 상황에서만 사용된다.
+
+
 #### Contribution
+data로부터 global, local information을 활용하여 dense, sparse correspondence를 둘 다 얻을 수 있는 model
+
+원하는 만큼 임의의 query points에 대해 corresponding points를 찾아낼 수 있고 large motion에 대해서도 correspondence를 찾아낼 수 있는 model
+
+recursive method를 사용하여 accurate correspondences를 얻을 수 있는 model
+
 #### Key ideas
+functional method, transformer, recursive method
 #### Details
 ![image](https://user-images.githubusercontent.com/67745456/151150754-d43de8bd-a108-4354-85f0-957a29a5e05b.png)
+
+image pair로부터 얻은 feature map을 concatenation하고 positional encodings를 추가하고 transformer에 넣는다. 여기에 query point를 앞에서 사용한 positional encoder에 통과시켜 얻은 positional encoding을 decoder에 query로 넣어 원하는 query point에 대해 attention을 진행한다. decoder에 최종적으로 나온 결과를 fcn에 input으로 넣어 query point에 대한 corresponding point를 얻는다.
+
 ![image](https://user-images.githubusercontent.com/67745456/151150767-af3ed24d-a370-4ca9-8fcf-b3fc77094f84.png)
 
+찾은 corresponding point와 query point에 대해 zoomed in crops를 반복하여 정확도를 높인다.
 
 ### 3. LoFTR: Detector-Free Local Feature Matching with Transformers
 #### Introduction
 #### Contribution
 #### Key ideas
+pyramid feature map, transformer, coarse-to-fine method, select high confidence point in dense correlation map
 #### Details
 ![image](https://user-images.githubusercontent.com/67745456/151150791-701e39b6-ccfc-4e63-acdb-3a4612531cd5.png)
 ![image](https://user-images.githubusercontent.com/67745456/151150800-825a2f37-d7ce-4388-81f5-ee238906c576.png)
