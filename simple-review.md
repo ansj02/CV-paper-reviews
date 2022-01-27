@@ -272,8 +272,12 @@ a detector-free approach to local feature matching
 small pyramid feature map, transformer, coarse-to-fine method, select high confidence point in dense correlation map, division indistinctive regions by positional encoding, linear attention, soft mutual nearest neighbor matching
 #### Details
 ![image](https://user-images.githubusercontent.com/67745456/151150791-701e39b6-ccfc-4e63-acdb-3a4612531cd5.png)
+
 image pair로부터 coarse level feature map과 fine level feature map을 얻는데 특이하게 residual 방식으로 연결한 encoder-decoder 모양 network에서 fine feature map을 얻는다. 먼저 coarse level feature map을 1D vector로 피고 positional encoding을 더해서 transformer에 넣는다. 여기서 나온 결과를 differentiable matching layer에 넣어 matching map을 얻고 각 point에 대해 soft mutual nearest neighbor matching을 수행하여 high confidence matching map을 얻고 high confidence match에 대해 fine level feature map에서 해당하는 point 주변만 cropping하여 위와 같은 방식으로 attention된 feature map을 얻고 source의 중심 vector에 대해 target의 correlation을 수행하여 최종적으로 correspondence point를 얻는다.
+
 ![image](https://user-images.githubusercontent.com/67745456/151150800-825a2f37-d7ce-4388-81f5-ee238906c576.png)
+
+일반적으로 사용되는 dot product attention 대신 linear attention이 사용된다.
 
 
 
