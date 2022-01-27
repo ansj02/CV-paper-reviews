@@ -4,7 +4,8 @@
 2. Spatial Transformer Networks
 3. Neighbourhood Consensus Networks
 4. DGC-Net: Dense Geometric Correspondence Network
-5. GLU-Net: Global-Local Universal Network for Dense Flow and Correspondences
+5. GLU-Net: Global-Local Universal Network for Dense Flow and Correspondences - writing
+6. Learning Correspondence from the Cycle-consistency of Time - writing
 ### II. representation learning
 1. A Simple Framework for Contrastive Learning of Visual Representations
 2. Momentum Contrast for Unsupervised Visual Representation Learning
@@ -150,6 +151,19 @@ pyramid feature map, coarse-to-fine method, using both global and local correlat
 
 #### Details
 ![image](https://user-images.githubusercontent.com/67745456/151071387-3b312854-0f97-415b-921b-c650372c2ec9.png)
+
+### 6. Learning Correspondence from the Cycle-consistency of Time
+#### Introduction
+visual correspondence를 위한 representation learning에는 주로 large amounts of labelled data를 이용한 supervised learning을 이용했고 이는 prohibitively expensive했다.
+#### Contribution
+self-supervised method for learning visual correspondence from unlabeled video
+self-supervised method using cycle consistent tracking
+
+#### Key ideas
+cycle consistency, obtain unlimited supervision by tracking backward and then forward in video
+#### Details
+![image](https://user-images.githubusercontent.com/67745456/151367287-0f478c2e-3861-47bb-86b1-6349f9d85978.png)
+
 
 
 ## II. representation learning
