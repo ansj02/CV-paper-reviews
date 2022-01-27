@@ -155,14 +155,24 @@ pyramid feature map, coarse-to-fine method, using both global and local correlat
 ## II. representation learning
 ### 1. A Simple Framework for Contrastive Learning of Visual Representations
 #### Introduction
+Representation learning에 주로 사용되는 방법은 크게 generative or discriminative로 나눌 수 있다. Generative approach는 불필요하게 복잡한 연산을 포함할 수 있고 discriminative approach는 pretext tasks에 의한 학습이 learned representations의 generality를 제한할 수 있다는 문제가 있다. 최근 contrastive learning을 base로 한 discriminative approaches가 좋은 성능을 내고 있다.
 #### Contribution
+a simple framework for contrastive learning of visual representations, which outperforms previous work
 #### Key ideas
+large batch size, long training, suitable augmentation operation, constrative learning, nonlinear projection
 #### Details
 ![image](https://user-images.githubusercontent.com/67745456/151148509-a8a3e80c-3004-4ae0-aeac-17cdb73cd6f0.png)
+image pair를 siamese feature extractor를 통과시켜 얻은 representations를 마찬가지로 weights를 공유하는 projection에 통과시켜 얻은 최종 outputs의 dot product 방식으로 simirality를 계산한다.
+
+따로 negative samples를 만들지 않고 large size의 batch에 여러 image에 서로 다른 두 augmentation을 적용하여 만든 2 sets의 views를 만들고 loss의 분자에 같은 image에서 만들어진 views의 similarity, 분모에 다른 image에서 만들어진 views의 similarity를 넣고 -1을 곱해 같은 image에서 만들어진 representaion만 가까워지게 하고 나머진 다 멀어지게 하는 방향으로 학습한다.
+
+augmentation으로는 random cropping과 random color distortion을 같이 사용한 것이 global to local prediction이나 neighboring view prediction의 효과를 얻어 가장 좋은 성능을 보였다고 한다. 
 
 
 ### 2. Momentum Contrast for Unsupervised Visual Representation Learning
 #### Introduction
+unsupervised representation learning이 nlp분야에서는 상당히 성공적으로 사용되고 있지만 computer vision 분야는 여전히 supervised pre-training 방식이 우세하다. 최근 contrastive learning을 사용한 방식으로 진전이 있었지만 negative sample을 제공하는 방식에서 large and consistent한 dictionary를 제공하지 못했다.
+대표적으로 simCLR은 batch size에 dictionary size가 종속되었고 memory size에 제약을 받았고 memory bank방식은 training 중에 dictionary 내부의 sample의 representation을 추출하는 model이 바뀌며 일관된 training이 힘들었다.
 #### Contribution
 #### Key ideas
 #### Details
