@@ -242,7 +242,7 @@ transformer, sequences of image patches, 2D patch to 1D vector
 ### 2. COTR: Correspondence Transformer for Matching Across Images
 #### Introduction
 finding correspondence problem을 수행하기 위한 방법은 크게 (i) image pair의 spase keypoints를 찾아 match를 수행하는 방법과 (ii) image pair의 전체적인 dense correspondence를 얻는 방법으로 나눌 수 있다.
-(i)의 방법은 large displacements 상황의 멀리 떨어진 points의 correspondence를 얻을 수 있지만 local feature에 의존하기 때문에 texture-less area에서 잘 작동하지 않을 수 있고 필요한 point의 match를 얻을 수 없을 수도 있다. (ii)의 방법은 context를 활용하여 texture-less area같은 구분이 힘든 region의 correspondece도 얻을 수 있고 arbitrary location의 correspondence를 얻을 수 있지만 주로 small dispacements 상황에서만 사용된다.
+(i)의 방법은 large displacements 상황의 멀리 떨어진 points의 correspondence를 얻을 수 있지만 local feature에 의존하기 때문에 texture-less area에서 잘 작동하지 않을 수 있고 필요한 point의 match를 얻을 수 없을 수도 있다. (ii)의 방법은 context를 활용하여 texture-less area같은 구분이 힘든 region의 correspondece도 얻을 수 있고 arbitrary location의 correspondence를 얻을 수 있지만 low feature resolution에서만 사용할 수 있어 정보 손실이 있고 주로 small dispacements 상황에서만 사용된다.
 
 
 #### Contribution
@@ -265,11 +265,14 @@ image pair로부터 얻은 feature map을 concatenation하고 positional encodin
 
 ### 3. LoFTR: Detector-Free Local Feature Matching with Transformers
 #### Introduction
+local feature matching에서 주로 사용되는 feature detector based methods는 poor texture나 repetitive pattern이 많은 image에 대해 충분한 interest points를 감지하지 못한다. 최근에는 dense matches 중 high confidence match를 CNN으로 계산하여 선택하는 방법도 연구되었지만 이 역시 convolution layer의 근본적인 문제인 limited receptive field 때문에 indistinctive regions를 잘 구분하지 못한다.
 #### Contribution
+a detector-free approach to local feature matching
 #### Key ideas
-pyramid feature map, transformer, coarse-to-fine method, select high confidence point in dense correlation map
+small pyramid feature map, transformer, coarse-to-fine method, select high confidence point in dense correlation map, division indistinctive regions by positional encoding, linear attention, soft mutual nearest neighbor matching
 #### Details
 ![image](https://user-images.githubusercontent.com/67745456/151150791-701e39b6-ccfc-4e63-acdb-3a4612531cd5.png)
+image pair로부터 coarse level feature map과 fine level feature map을 얻는데 특이하게 residual 방식으로 연결한 encoder-decoder 모양 network에서 fine feature map을 얻는다. 먼저 coarse level feature map을 1D vector로 피고 positional encoding을 더해서 transformer에 넣는다. 여기서 나온 결과를 differentiable matching layer에 넣어 matching map을 얻고 각 point에 대해 soft mutual nearest neighbor matching을 수행하여 high confidence matching map을 얻고 high confidence match에 대해 fine level feature map에서 해당하는 point 주변만 cropping하여 위와 같은 방식으로 attention된 feature map을 얻고 source의 중심 vector에 대해 target의 correlation을 수행하여 최종적으로 correspondence point를 얻는다.
 ![image](https://user-images.githubusercontent.com/67745456/151150800-825a2f37-d7ce-4388-81f5-ee238906c576.png)
 
 
