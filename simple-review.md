@@ -15,6 +15,9 @@
 1. An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale
 2. COTR: Correspondence Transformer for Matching Across Images
 3. LoFTR: Detector-Free Local Feature Matching with Transformers
+### IV. 3D reconstruction
+1. Occupancy Networks: Learning 3D Reconstruction in Function Space - writing
+2. NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis - writing
 
 ## I. Matching problem
 ### 1. Convolutional neural network architecture for geometric matching
@@ -295,6 +298,28 @@ image pair로부터 coarse level feature map과 fine level feature map을 얻는
 
 
 
+
+## IV. 3D reconstruction
+
+### 1. Occupancy Networks: Learning 3D Reconstruction in Function Space - writing
+#### Introduction
+기존의 3D reconstruction을 위한 3D representation을 위해 주로 사용된 method는 크게 voxel, point, mesh representation method로 나눌 수 있다.
+이 중 voxel representation는 memory footprint가 resolution 증가에 따라 cubically 증가하기 때문에 상대적으로 적은 수의 voxels로 representation이 제한된다. point clouds나 meshs를 활용하는 method들이 대안으로 제시되었지만 point clouds는 underlying mesh의 connectivity structure가 없으므로 model에서 3D geometry 추출을 위한 추가 전처리 작업이 필요하고 mesh representation은 대상 domain의 template mesh가 필요하여 arbitrary topologies를 할 수 없고 매우 특정한 영역으로 제한되어 나타내어진다. 또한 두 방법 모두 standard feed-forward network를 사용하여 안정적으로 나타낼 수 있는 points, vertices 수가 제한된다.
+
+#### Contribution
+representation for 3D geometry based on learning a continuous 3D mapping
+representation that can use a various input types
+approach that can generate high-qualiry meshes
+
+#### Key ideas
+#### Details
+
+
+### 2. NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis - writing
+#### Introduction
+#### Contribution
+#### Key ideas
+#### Details
 
 
 
