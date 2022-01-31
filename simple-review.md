@@ -308,11 +308,41 @@ image pair로부터 coarse level feature map과 fine level feature map을 얻는
 
 #### Contribution
 representation for 3D geometry based on learning a continuous 3D mapping
+
 representation that can use a various input types
+
 approach that can generate high-qualiry meshes
 
 #### Key ideas
+classifier, conditional encoder, low to high resolution
 #### Details
+![teaser](https://user-images.githubusercontent.com/67745456/151742237-63910d96-e9e6-42eb-9b32-ba027b6694a1.png)
+
+3D geometry representation을 표현하려는 object의 내부, 외부를 구별하는 classifier를 사용하여 만든다.
+
+![image](https://user-images.githubusercontent.com/67745456/151747624-2bb07f94-144f-4994-953b-ea1cd32f9b0e.png)
+
+먼저, 사용되는 model은 conditional encoder depending on the type of input와 fcn ResNet block으로 이루어진 classifier model이다. model이 3D representation을 생성할 대상의 input data와 occupancy probability를 예측한 3D locations를 입력받아 각 location의 occupancy probability를 출력한다.
+
+![image](https://user-images.githubusercontent.com/67745456/151751390-d22497e4-96fe-45a4-813b-31eb9eaa1119.png)
+
+input data를 mini batch로 나누고 batch내의 각각의 input data에 대해 random sampling한 K개의 points에 대해 예측한 occupancy prob와 실제 occupancy label간의 loss를 사용하여 학습한다.
+
+![image](https://user-images.githubusercontent.com/67745456/151789311-aa13bc17-bdb0-4428-85a8-8dba126c1e11.png)
+
+generative model을 학습시키는데도 사용할 수 있다. probabilistic latent variable z의 분포를 예측하는 encoder의 결과와 prior distribution을 KL-divergence로 가까워지도록 encoder를 학습한다.
+
+![image](https://user-images.githubusercontent.com/67745456/151794506-a0e9f82f-6e86-48a2-9cd3-2b70a4d74d05.png)
+
+3D reconstruction을 위해 Marching Cubes algorithm으로 approximate isosurface를 얻는다. 즉, 만들고자 하는 3D structure의 경계를 얻는다.
+
+![image](https://user-images.githubusercontent.com/67745456/151793820-2e85d1da-fc78-40ed-a7ce-aa5890a7ba40.png)
+
+initial resolution에서 모든 point에 대해 model에서 occupied or unoccupied 여부를 평가한다. 그리고 각 voxel에 대해 occupied, unoccupied corners를 모두 가진 voxel을 active로 mark하고 active voxels를 8개의 subvoxels로 나눈다. 정해진 resolution이 될 때까지 위의 과정을 반복하여 정해진 resolution grid의 point를 얻고 이를 이용하여 simplify mesh를 얻는다. 마지막으로 gradient를 사용하여 mesh를 보정하고 최종 3D structure를 얻는다.
+
+![image](https://user-images.githubusercontent.com/67745456/151795975-a1b8bb2e-284c-4ed6-866a-1b182142f87a.png)
+
+마지막 mesh 보정을 위해 mesh의 각 면에서 points를 random sampling하고 각 point의 occupancy 평가 값이 경계 값인 τ에 가까워지도록 occupancy 평가 값의 gradients와 mesh 방향 값이 가까워지도록 mesh를 조정한다.
 
 
 ### 2. NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis - writing
