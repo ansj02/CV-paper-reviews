@@ -347,8 +347,20 @@ initial resolution에서 모든 point에 대해 model에서 occupied or unoccupi
 
 ### 2. NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis - writing
 #### Introduction
+
+
 #### Contribution
+
+An approach for representing continuous scenes with complex geometry and materials as 5D neural radiance fields, parameterized as basic MLP networks
+
+A differentiable rendering procedure based on classical volume rendering
+
+A positional encoding to map each input 5D coordinate into a higher dimensional space, which enables us to successfully optimize neural radiance fields to represent high frequency scene content
+
 #### Key ideas
+
+3D rendering with ray, color and dencity model, 3D modeling with neural radiance fields, 1 model for 1 task, positional encoding, hierarchical method
+
 #### Details
 
 ![image](https://user-images.githubusercontent.com/67745456/151969066-622cd0f9-ffd3-4907-bb28-1d9f4c510ea7.png)
