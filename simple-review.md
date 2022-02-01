@@ -353,18 +353,31 @@ initial resolution에서 모든 point에 대해 model에서 occupied or unoccupi
 
 ![image](https://user-images.githubusercontent.com/67745456/151969066-622cd0f9-ffd3-4907-bb28-1d9f4c510ea7.png)
 
+만들려는 view로 부터 각 pixel로 ray를 통과시키고 가상의 3D space에서 ray에 포함된 locations가 가지는 color들을 자신과 앞 locations의 density들을 이용한 weight으로 전부 weighted sum하여 해당 pixel의 color값을 정한다. 이를 위해 특정 location에 대해 location값과 ray direction을 입력받아 color와 density를 출력하는 mlp model을 사용한다. 이때 model은 location과 ray direction에 대한 continuous function이므로 continuous 3D structure를 정의하는 역할을 하며 논문의 목적인 임의의 view에서 image의 각 pixel값을 예측하는데도 사용된다. 따라서 다양한 view의 image를 만들어내는 동시에 3D structure를 정의하는 model을 학습시킨다. 기존의 deep learning model들과 다르게 1개의 대상에 대해 1개의 model이 사용된다. 즉, 각각의 대상을 3D로 만들고 redering하기 위해 각각의 학습된 weigt을 가진 model이 필요하다.
+
 ![image](https://user-images.githubusercontent.com/67745456/151969143-628971c9-1838-4926-9dfa-ce53fd5febf9.png)
+
+위에서 말했듯이 view에서 각 pixel의 color값을 구하기 위해 ray에 포함된 3D space의 location의 model로부터 나온 color값의 weighted sum을 이용한다. 여기서 weight은 해당 location보다 앞(view에 가까운) location의 density 적분 값에 반비례하고 자신의 density 값에 비례한다.
 
 ![image](https://user-images.githubusercontent.com/67745456/151969205-8da7dd38-6de9-4653-a766-45fd86c3b906.png)
 
 ![image](https://user-images.githubusercontent.com/67745456/151969254-a1b7dccf-0ff8-4eec-aad9-aeb515e80fc9.png)
 
+실제로 계산할 때는 continuous 값을 처리할 수 없으므로 각 ray를 등분하여 각 단에서 uniform random sampling한 location을 사용한다.
+
 ![image](https://user-images.githubusercontent.com/67745456/151969336-f75454d1-8cdb-4d77-8fde-ce9cc1b6abf1.png)
+
+논문에서는 model의 input으로 들어가는 3D location과 3D direction의 low dimention에 의해 high frequency output을 없기 때문에 periodic function을 이용한 positional encoding으로 input의 차원수를 늘려준다.
+
+![image](https://user-images.githubusercontent.com/67745456/151985991-fd6ccd29-869b-425a-b15d-503684ab8b05.png)
+
+location의 color와 density를 예측하는 model은 단순한 mlp model이며 각각 L=10으로 60D로 만든 location과 L=4로 24D로 만든 direction을 input으로 받고 direction은 color 예측에만 사용된다.
 
 ![image](https://user-images.githubusercontent.com/67745456/151969526-291d429a-ee64-4236-9631-b70dd535cb20.png)
 
+![image](https://user-images.githubusercontent.com/67745456/151986846-c5f142b6-9eb4-445a-8ce8-598d9f2d8be0.png)
 
-
+3D space상에서 실제 집중해야하는 부분을 더 비중있게 계산하기 위해 coarse network와 fine network를 사용하여 hierarchical하게 계산한다. 먼저 ray에서 coarse locations에 대해 계산을 수행하고 높은 weight 값을 가진 부분을 다시 fine location으로 나누어 계산한다. fine network와 coarse network 모두에서 ground truth에 대한 loss를 계산한다.
 
 
 
