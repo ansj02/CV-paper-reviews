@@ -351,6 +351,20 @@ initial resolution에서 모든 point에 대해 model에서 occupied or unoccupi
 #### Key ideas
 #### Details
 
+![image](https://user-images.githubusercontent.com/67745456/151969066-622cd0f9-ffd3-4907-bb28-1d9f4c510ea7.png)
+
+![image](https://user-images.githubusercontent.com/67745456/151969143-628971c9-1838-4926-9dfa-ce53fd5febf9.png)
+
+![image](https://user-images.githubusercontent.com/67745456/151969205-8da7dd38-6de9-4653-a766-45fd86c3b906.png)
+
+![image](https://user-images.githubusercontent.com/67745456/151969254-a1b7dccf-0ff8-4eec-aad9-aeb515e80fc9.png)
+
+![image](https://user-images.githubusercontent.com/67745456/151969336-f75454d1-8cdb-4d77-8fde-ce9cc1b6abf1.png)
+
+![image](https://user-images.githubusercontent.com/67745456/151969526-291d429a-ee64-4236-9631-b70dd535cb20.png)
+
+
+
 
 
 
