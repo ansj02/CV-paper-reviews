@@ -6,6 +6,7 @@
 4. DGC-Net: Dense Geometric Correspondence Network
 5. GLU-Net: Global-Local Universal Network for Dense Flow and Correspondences - writing
 6. Learning Correspondence from the Cycle-consistency of Time - writing
+7. CATs: Cost Aggregation Transformers for Visual Correspondence - writing
 ### II. representation learning
 1. A Simple Framework for Contrastive Learning of Visual Representations
 2. Momentum Contrast for Unsupervised Visual Representation Learning
@@ -16,7 +17,7 @@
 2. COTR: Correspondence Transformer for Matching Across Images
 3. LoFTR: Detector-Free Local Feature Matching with Transformers
 ### IV. 3D reconstruction
-1. Occupancy Networks: Learning 3D Reconstruction in Function Space - writing
+1. Occupancy Networks: Learning 3D Reconstruction in Function Space
 2. NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis - writing
 
 ## I. Matching problem
@@ -168,6 +169,11 @@ cycle consistency, obtain unlimited supervision by tracking backward and then fo
 ![image](https://user-images.githubusercontent.com/67745456/151367287-0f478c2e-3861-47bb-86b1-6349f9d85978.png)
 
 
+### 7. CATs: Cost Aggregation Transformers for Visual Correspondence
+#### Introduction
+#### Contribution
+#### Key ideas
+#### Details
 
 ## II. representation learning
 ### 1. A Simple Framework for Contrastive Learning of Visual Representations
