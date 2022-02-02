@@ -171,9 +171,26 @@ cycle consistency, obtain unlimited supervision by tracking backward and then fo
 
 ### 7. CATs: Cost Aggregation Transformers for Visual Correspondence
 #### Introduction
+
+semantically similar images에 대해 dense correpondences를 구축하는 것은 computer vision의 다양한 tasks에 대해 중요한 문제였다. classical dense correspondence problem이 constrained setting에서의 data를 사용한 것에 반해 semantic correspondence는 unconstrained setting의 image pair를 사용하며 이를 처리하기 위해 classical matching pipeline의 feature extraction, cost aggregation, flow estimation의 성능을 향상시키기 위한 다양한 연구가 있었다. 이 중 feature extraction에 집중한 연구는 repetitive patterns or background clutters에 의한 ambiguity를 처리하는데 어려움을 겪었고, flow estimation에 집중한 연구는 initial correlation map의 quality에 크게 의존했다. 본 논문에서 다룰 cost aggregation에 집중한 기존의 연구는 matching score를 개선하기 위해 다양한 시도를 했지만 CNN의 local receptive field에 의한 한계를 가져오거나 severe deformations에 대해 잘 처리하지 못하는 hand-craft technique을 사용하는 등 한계가 있었다.
+
 #### Contribution
+
+Transformer-based cost aggregation networks that effectively integrate information present in all pairwise matching costs
+
 #### Key ideas
+
+transformer, both direction consistency, residual connection, multi level features, appearance  embedding, data augmentation
+
 #### Details
+
+![image](https://user-images.githubusercontent.com/67745456/152102215-d0436cc0-4ca8-48c8-8619-c1ff7bb35c78.png)
+
+![image](https://user-images.githubusercontent.com/67745456/152155662-ed2d90ab-0567-4a0e-9e08-67f9da6fc8d7.png)
+
+![image](https://user-images.githubusercontent.com/67745456/152156401-5f66c32c-d22e-4eb5-8310-382f59d7da07.png)
+
+
 
 ## II. representation learning
 ### 1. A Simple Framework for Contrastive Learning of Visual Representations
