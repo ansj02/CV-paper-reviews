@@ -186,6 +186,12 @@ transformer, both direction consistency, residual connection, multi level featur
 
 ![image](https://user-images.githubusercontent.com/67745456/152102215-d0436cc0-4ca8-48c8-8619-c1ff7bb35c78.png)
 
+image pair에서 feature extractor를 이용하여 각 level별로 feature maps를 얻고 L개 쌍의 feature map을 전부 h×w로 resizing하고 쌓는다. 각 level의 feature map 간 correlation을 수행하여 hw×hw×L의 correlation map을 얻고 transformer에서 correlation map을 disambiguate하기 위해 target feature map을 hw×p×L로 projection하여 appearance embedding으로써 correlation map에 concatenate하여 transformer aggregator를 통해 matching score에 cost aggregation하고 image 순서에 invariance한 model을 학습시키기 위해 나온 결과를 transepose하고 source image를 projection하고 concatenate하여 다시 동일한 transformer aggregator에 통과시켜 얻은 결과를 최종적으로 level dimension 방향의 average를 구하고 soft argmax를 적용하여 최종적인 dense flow field를 얻는다. 초반 model학습을 안정적으로 쉽게 할 수 있도록 residual connection으로 초반에 얻은 raw correlation map을 각 transformer aggregator의 output에 합쳐준다.
+
+![image](https://user-images.githubusercontent.com/67745456/152160878-1ff2e069-e210-4c15-ba56-f9803ec3d8c8.png)
+
+transformer aggregator는 positional inter correlation self attention과 dimensional inter correlation self attention으로 이루어져 있고 마지막 projection을 거쳐 correlation map과 같은 size의 output을 내보낸다.
+
 ![image](https://user-images.githubusercontent.com/67745456/152155662-ed2d90ab-0567-4a0e-9e08-67f9da6fc8d7.png)
 
 ![image](https://user-images.githubusercontent.com/67745456/152156401-5f66c32c-d22e-4eb5-8310-382f59d7da07.png)
@@ -371,6 +377,8 @@ initial resolution에서 모든 point에 대해 model에서 occupied or unoccupi
 ### 2. NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis - writing
 #### Introduction
 
+view syntheis를 위하여 직접 neural 3D shape representations을 정의하여 이를 rendering하여 synthetic view를 만들었다.
+기존의 signed distance functions or occupancy fields를 이용한 neural 3D shape representations는 ground truth에 의해 제한되고 기존의 rendering은 잠재적으로 high resolution geometry를 나타낼 수 있지만 low geometric complexity에 제한되어 oversmoothed rendering을 나타내었다.
 
 #### Contribution
 
