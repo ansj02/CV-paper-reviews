@@ -15,10 +15,15 @@
 1. An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale
 2. COTR: Correspondence Transformer for Matching Across Images
 3. LoFTR: Detector-Free Local Feature Matching with Transformers
-4. CATs: Cost Aggregation Transformers for Visual Correspondence - writing
+4. CATs: Cost Aggregation Transformers for Visual Correspondence
 ### IV. 3D reconstruction
 1. Occupancy Networks: Learning 3D Reconstruction in Function Space
-2. NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis - writing
+2. NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis
+### V. image generation
+1. Generative Adversarial Nets - writing
+2. A Style-Based Generator Architecture for Generative Adversarial Networks - writing
+3. Image-to-Image Translation with Conditional Adversarial Networks - writing
+
 
 ## I. Matching problem
 ### 1. Convolutional neural network architecture for geometric matching
@@ -423,8 +428,25 @@ location의 color와 density를 예측하는 model은 단순한 mlp model이며 
 
 
 
+## V. image generation
+### 1. Generative Adversarial Nets
+#### Introduction
+#### Contribution
+#### Key ideas
+adversarial model
+#### Details
+
+![image](https://user-images.githubusercontent.com/67745456/152272119-16ef1847-3c5c-4dc8-b824-045ca0f6f58c.png)
+
+![image](https://user-images.githubusercontent.com/67745456/152272173-a6fa2d27-40af-4c0f-a025-e2ef8042f4d8.png)
 
 
+### 2. A Style-Based Generator Architecture for Generative Adversarial Networks
+#### Introduction
+generative methods(특히, gan based methods)에 의해 생성된 image의 resolution and quality가 빠르게 향상되고 있지만 아직까지 generator들은 black boxes로써 작동하기 때문에 latent space의 의미 등을 사람이 알 수 없고 서로 다른 generator들간의 정량적 비교도 할 수 없다.
+#### Contribution
+#### Key ideas
+#### Details
 
 
 
