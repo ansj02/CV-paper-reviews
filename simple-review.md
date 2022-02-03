@@ -6,7 +6,6 @@
 4. DGC-Net: Dense Geometric Correspondence Network
 5. GLU-Net: Global-Local Universal Network for Dense Flow and Correspondences - writing
 6. Learning Correspondence from the Cycle-consistency of Time - writing
-7. CATs: Cost Aggregation Transformers for Visual Correspondence - writing
 ### II. representation learning
 1. A Simple Framework for Contrastive Learning of Visual Representations
 2. Momentum Contrast for Unsupervised Visual Representation Learning
@@ -16,6 +15,7 @@
 1. An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale
 2. COTR: Correspondence Transformer for Matching Across Images
 3. LoFTR: Detector-Free Local Feature Matching with Transformers
+4. CATs: Cost Aggregation Transformers for Visual Correspondence - writing
 ### IV. 3D reconstruction
 1. Occupancy Networks: Learning 3D Reconstruction in Function Space
 2. NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis - writing
@@ -169,34 +169,6 @@ cycle consistency, obtain unlimited supervision by tracking backward and then fo
 ![image](https://user-images.githubusercontent.com/67745456/151367287-0f478c2e-3861-47bb-86b1-6349f9d85978.png)
 
 
-### 7. CATs: Cost Aggregation Transformers for Visual Correspondence
-#### Introduction
-
-semantically similar images에 대해 dense correpondences를 구축하는 것은 computer vision의 다양한 tasks에 대해 중요한 문제였다. classical dense correspondence problem이 constrained setting에서의 data를 사용한 것에 반해 semantic correspondence는 unconstrained setting의 image pair를 사용하며 이를 처리하기 위해 classical matching pipeline의 feature extraction, cost aggregation, flow estimation의 성능을 향상시키기 위한 다양한 연구가 있었다. 이 중 feature extraction에 집중한 연구는 repetitive patterns or background clutters에 의한 ambiguity를 처리하는데 어려움을 겪었고, flow estimation에 집중한 연구는 initial correlation map의 quality에 크게 의존했다. 본 논문에서 다룰 cost aggregation에 집중한 기존의 연구는 matching score를 개선하기 위해 다양한 시도를 했지만 CNN의 local receptive field에 의한 한계를 가져오거나 severe deformations에 대해 잘 처리하지 못하는 hand-craft technique을 사용하는 등 한계가 있었다.
-
-#### Contribution
-
-Transformer-based cost aggregation networks that effectively integrate information present in all pairwise matching costs
-
-#### Key ideas
-
-transformer, both direction consistency, residual connection, multi level features, appearance  embedding, data augmentation
-
-#### Details
-
-![image](https://user-images.githubusercontent.com/67745456/152102215-d0436cc0-4ca8-48c8-8619-c1ff7bb35c78.png)
-
-image pair에서 feature extractor를 이용하여 각 level별로 feature maps를 얻고 L개 쌍의 feature map을 전부 h×w로 resizing하고 쌓는다. 각 level의 feature map 간 correlation을 수행하여 hw×hw×L의 correlation map을 얻고 transformer에서 correlation map을 disambiguate하기 위해 target feature map을 hw×p×L로 projection하여 appearance embedding으로써 correlation map에 concatenate하여 transformer aggregator를 통해 matching score에 cost aggregation하고 image 순서에 invariance한 model을 학습시키기 위해 나온 결과를 transepose하고 source image를 projection하고 concatenate하여 다시 동일한 transformer aggregator에 통과시켜 얻은 결과를 최종적으로 level dimension 방향의 average를 구하고 soft argmax를 적용하여 최종적인 dense flow field를 얻는다. 초반 model학습을 안정적으로 쉽게 할 수 있도록 residual connection으로 초반에 얻은 raw correlation map을 각 transformer aggregator의 output에 합쳐준다.
-
-![image](https://user-images.githubusercontent.com/67745456/152160878-1ff2e069-e210-4c15-ba56-f9803ec3d8c8.png)
-
-transformer aggregator는 positional inter correlation self attention과 dimensional inter correlation self attention으로 이루어져 있고 마지막 projection을 거쳐 correlation map과 같은 size의 output을 내보낸다.
-
-![image](https://user-images.githubusercontent.com/67745456/152155662-ed2d90ab-0567-4a0e-9e08-67f9da6fc8d7.png)
-
-![image](https://user-images.githubusercontent.com/67745456/152156401-5f66c32c-d22e-4eb5-8310-382f59d7da07.png)
-
-
 
 ## II. representation learning
 ### 1. A Simple Framework for Contrastive Learning of Visual Representations
@@ -326,6 +298,33 @@ image pair로부터 coarse level feature map과 fine level feature map을 얻는
 일반적으로 사용되는 dot product attention 대신 linear attention이 사용된다.
 
 
+
+### 4. CATs: Cost Aggregation Transformers for Visual Correspondence
+#### Introduction
+
+semantically similar images에 대해 dense correpondences를 구축하는 것은 computer vision의 다양한 tasks에 대해 중요한 문제였다. classical dense correspondence problem이 constrained setting에서의 data를 사용한 것에 반해 semantic correspondence는 unconstrained setting의 image pair를 사용하며 이를 처리하기 위해 classical matching pipeline의 feature extraction, cost aggregation, flow estimation의 성능을 향상시키기 위한 다양한 연구가 있었다. 이 중 feature extraction에 집중한 연구는 repetitive patterns or background clutters에 의한 ambiguity를 처리하는데 어려움을 겪었고, flow estimation에 집중한 연구는 initial correlation map의 quality에 크게 의존했다. 본 논문에서 다룰 cost aggregation에 집중한 기존의 연구는 matching score를 개선하기 위해 다양한 시도를 했지만 CNN의 local receptive field에 의한 한계를 가져오거나 severe deformations에 대해 잘 처리하지 못하는 hand-craft technique을 사용하는 등 한계가 있었다.
+
+#### Contribution
+
+Transformer-based cost aggregation networks that effectively integrate information present in all pairwise matching costs
+
+#### Key ideas
+
+transformer, both direction consistency, residual connection, multi level features, appearance  embedding, data augmentation
+
+#### Details
+
+![image](https://user-images.githubusercontent.com/67745456/152102215-d0436cc0-4ca8-48c8-8619-c1ff7bb35c78.png)
+
+image pair에서 feature extractor를 이용하여 각 level별로 feature maps를 얻고 L개 쌍의 feature map을 전부 h×w로 resizing하고 쌓는다. 각 level의 feature map 간 correlation을 수행하여 hw×hw×L의 correlation map을 얻고 transformer에서 correlation map을 disambiguate하기 위해 target feature map을 hw×p×L로 projection하여 appearance embedding으로써 correlation map에 concatenate하여 transformer aggregator를 통해 matching score에 cost aggregation하고 image 순서에 invariance한 model을 학습시키기 위해 나온 결과를 transepose하고 source image를 projection하고 concatenate하여 다시 동일한 transformer aggregator에 통과시켜 얻은 결과를 최종적으로 level dimension 방향의 average를 구하고 soft argmax를 적용하여 최종적인 dense flow field를 얻는다. 초반 model학습을 안정적으로 쉽게 할 수 있도록 residual connection으로 초반에 얻은 raw correlation map을 각 transformer aggregator의 output에 합쳐준다.
+
+![image](https://user-images.githubusercontent.com/67745456/152160878-1ff2e069-e210-4c15-ba56-f9803ec3d8c8.png)
+
+transformer aggregator는 positional inter correlation self attention과 dimensional inter correlation self attention으로 이루어져 있고 마지막 projection을 거쳐 correlation map과 같은 size의 output을 내보낸다.
+
+![image](https://user-images.githubusercontent.com/67745456/152155662-ed2d90ab-0567-4a0e-9e08-67f9da6fc8d7.png)
+
+![image](https://user-images.githubusercontent.com/67745456/152156401-5f66c32c-d22e-4eb5-8310-382f59d7da07.png)
 
 
 ## IV. 3D reconstruction
