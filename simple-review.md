@@ -22,7 +22,8 @@
 ### V. image generation
 1. Generative Adversarial Nets - writing
 2. A Style-Based Generator Architecture for Generative Adversarial Networks - writing
-3. Image-to-Image Translation with Conditional Adversarial Networks - writing
+3. Analyzing and Improving the Image Quality of StyleGAN - writing
+4. Image-to-Image Translation with Conditional Adversarial Networks - writing
 
 
 ## I. Matching problem
@@ -446,14 +447,33 @@ adversarial model
 generative methods(특히, gan based methods)에 의해 생성된 image의 resolution and quality가 빠르게 향상되고 있지만 아직까지 generator들은 black boxes로써 작동하기 때문에 latent space의 의미 등을 사람이 알 수 없고 서로 다른 generator들간의 정량적 비교도 할 수 없다.
 #### Contribution
 #### Key ideas
+low to high resolution, style level, AdaIN, mapping network
 #### Details
+![image](https://user-images.githubusercontent.com/67745456/152730892-26f219b1-83bf-42f3-833c-0ff18436d8de.png)
+
+기존의 gan의 generator와 다르게 latent code z를 바로 model에 시작부에 집어넣지 않고 model의 input으로는 learned constant input을 집어넣고 z는 mapping network를 거쳐 원하는 형태로 만들어진 latent space W의 w로 만들고 learned affine transformation에 의해 AdaIn의 scale, bias factor 형태로 style로써 model의 각 block에 2번씩 convolution layer 앞에 들어간다. 이때 머리카락이나 주근깨 위치같은 random한 특성을 표현하기 위한 noise가 convolution layer와 AdaIn layer 중간에 들어간다. block은 w, h 크기를 2배씩 키우며 다루는 map이 점차 low resolution에서 high resolution으로 변해가고 구체적으로는 4x4에서 1024x1024까지 총 9개 block, 18개 style이 들어간다. 마지막 rayer는 map을 1024x1024x3로 RGB image로 만들어 최종 결과를 내보낸다. 이때 앞의 layer에 들어간 style일수록 얼굴형 같은 큰 feature를 결정하고 뒤에 들어간 style일수록 작고 세밀한 feature를 결정한다.
 
 
 
+### 3. Analyzing and Improving the Image Quality of StyleGAN
+#### Introduction
+
+style gan은 gan의 generator를 개선하여 좋은 성과를 냈지만 result image에 Droplet artifacts, Phase artifacts가 생겼고 noise의 영향이 style에 반비례하게 나타나는 등의 문제가 있었다. 몇몇 design을 개선하여 문제를 해결
+
+#### Contribution
 
 
 
+#### Key ideas
 
+
+
+#### Details
+![image](https://user-images.githubusercontent.com/67745456/152734427-12bc658b-afc7-4042-9c80-60f5a704fc18.png)
+
+style gan을 base로 AdaIn을 normalization과 modulation(scaling, biasing)으로 나누어 설명했다. 초기 input인 constrant에 대한 bias와 normalization과정을 제거했고 AdaIn의 normalization과 modulation 과정에 mean을 사용하지않고 bias없이 standard deviation과 scaling만 적용했다. style에 의한 영향과 noise에 의한 영향을 분리하기 위해 noise를 block 밖에 적용하였고 마지막으로 normalization과 style을 feature map에 직접 적용하지 않고 convolution weights에 적용하였다. 여기서 demodulation은 standard deviation으로 나누는 mean을 0으로 하지 않는 normalization 과정이다.
+
+![image](https://user-images.githubusercontent.com/67745456/152739645-9d1e3e9e-7b24-462e-aa96-e1d5b9d0f391.png)
 
 
 
