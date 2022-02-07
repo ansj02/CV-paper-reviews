@@ -24,6 +24,7 @@
 2. A Style-Based Generator Architecture for Generative Adversarial Networks - writing
 3. Analyzing and Improving the Image Quality of StyleGAN - writing
 4. Image-to-Image Translation with Conditional Adversarial Networks - writing
+5. STYLENERF: A STYLE-BASED 3D-AWARE GENERATOR FOR HIGH-RESOLUTION IMAGE SYNTHESIS - writing
 
 
 ## I. Matching problem
@@ -474,6 +475,59 @@ style gan은 gan의 generator를 개선하여 좋은 성과를 냈지만 result 
 style gan을 base로 AdaIn을 normalization과 modulation(scaling, biasing)으로 나누어 설명했다. 초기 input인 constrant에 대한 bias와 normalization과정을 제거했고 AdaIn의 normalization과 modulation 과정에 mean을 사용하지않고 bias없이 standard deviation과 scaling만 적용했다. style에 의한 영향과 noise에 의한 영향을 분리하기 위해 noise를 block 밖에 적용하였고 마지막으로 normalization과 style을 feature map에 직접 적용하지 않고 convolution weights에 적용하였다. 여기서 demodulation은 standard deviation으로 나누는 mean을 0으로 하지 않는 normalization 과정이다.
 
 ![image](https://user-images.githubusercontent.com/67745456/152739645-9d1e3e9e-7b24-462e-aa96-e1d5b9d0f391.png)
+
+
+
+
+
+### 5. STYLENERF: A STYLE-BASED 3D-AWARE GENERATOR FOR HIGH-RESOLUTION IMAGE SYNTHESIS - writing
+
+#### Introduction
+
+기존의 generative model들은 high resolution image를 만들어내지 못하거나 noticeable 3D inconsistent artifacts를 생성했다. 그리고 style attributes와 explicit 3D camera poses에 대한 control을 잘 수행하지 못하였다. NeRF와 style-based generator를 통합하여 이러한 문제들을 해결한다.
+
+#### Contribution
+
+3D-aware generative model for photo-realistic highresolution image synthesis with high multi-view consistency, which can be trained on unstructured 2D images
+
+#### Key ideas
+
+
+
+#### Details
+![image](https://user-images.githubusercontent.com/67745456/152768609-00ed03de-ab32-480a-8a68-ed5473080a52.png)
+
+![image](https://user-images.githubusercontent.com/67745456/152768704-8b07efb7-ec20-4e78-a7bc-65d93cc304da.png)
+
+![image](https://user-images.githubusercontent.com/67745456/152768799-efb366f5-57df-462d-a812-a28e3c2a815b.png)
+
+![image](https://user-images.githubusercontent.com/67745456/152768847-63153552-d361-4eba-b93a-a78ab4c156e2.png)
+
+![image](https://user-images.githubusercontent.com/67745456/152768901-3e2cbfb8-c6fd-4c9b-bf20-b88d501aa3f2.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
