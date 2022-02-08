@@ -6,6 +6,7 @@
 4. DGC-Net: Dense Geometric Correspondence Network
 5. GLU-Net: Global-Local Universal Network for Dense Flow and Correspondences - writing
 6. Learning Correspondence from the Cycle-consistency of Time - writing
+7. GAN-Supervised Dense Visual Alignment - writing
 ### II. representation learning
 1. A Simple Framework for Contrastive Learning of Visual Representations
 2. Momentum Contrast for Unsupervised Visual Representation Learning
@@ -176,6 +177,13 @@ cycle consistency, obtain unlimited supervision by tracking backward and then fo
 ![image](https://user-images.githubusercontent.com/67745456/151367287-0f478c2e-3861-47bb-86b1-6349f9d85978.png)
 
 
+### 7. GAN-Supervised Dense Visual Alignment
+#### Introduction
+#### Contribution
+#### Key ideas
+#### Details
+하나의 class에 속하는 여러 image set에 대해 동시에 match 할 수 있는 모델
+pose 등을 나타내는 여러 mode c 중에 가장 잘 맞는 c로 군집화시키고 해당 T로 변환시켜 
 
 ## II. representation learning
 ### 1. A Simple Framework for Contrastive Learning of Visual Representations
