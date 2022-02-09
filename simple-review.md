@@ -538,9 +538,11 @@ style gan을 base로 AdaIn을 normalization과 modulation(scaling, biasing)으�
 
 ![image](https://user-images.githubusercontent.com/67745456/152768847-63153552-d361-4eba-b93a-a78ab4c156e2.png)
 
+기존 nerf model에 styleGAN2의 방식으로 weights에 style을 입힌 기본적인 styleNeRF model이다. 기존 NeRF와 다르게 projection을 제외하고도 density보다 color 예측에 더 많은 MLP layer를 사용한다.
+
 ![image](https://user-images.githubusercontent.com/67745456/152768901-3e2cbfb8-c6fd-4c9b-bf20-b88d501aa3f2.png)
 
-
+위의 model을 효율적으로 사용하기 위해 각 point가 한 번만 network를 통과할 수 있도록 model을 근사했다.
 
 
 
