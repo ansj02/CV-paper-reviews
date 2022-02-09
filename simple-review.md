@@ -179,11 +179,38 @@ cycle consistency, obtain unlimited supervision by tracking backward and then fo
 
 ### 7. GAN-Supervised Dense Visual Alignment
 #### Introduction
+correspondence or registration problem으로 잘 알려진 visual alignment는 computer vision의 다양한 task에 중요하게 사용된다. 최근의 대부분의 연구는 pairwise alignment만을 고려하고 global joint alignment에 대한 연구는 별로 주목을 받지 못하고 있지만 global joint alignment는 common refetence frame을 사용하는 tasks에서 중요하다. 본 논문의 motive가 된 congealing method는 image set을 common하게 continually warping하여 simple binary images에 대해서는 alignment를 잘 수행했지만 complex image set에서는 잘 동작하지 못하였다.
 #### Contribution
+GAN-Supervised algorithm that learns transformations of input images to bring them into better joint alignment
 #### Key ideas
+GAN-Supervised learnging, different style common appearance, clustering method, STN
 #### Details
-하나의 class에 속하는 여러 image set에 대해 동시에 match 할 수 있는 모델
-pose 등을 나타내는 여러 mode c 중에 가장 잘 맞는 c로 군집화시키고 해당 T로 변환시켜 
+
+![image](https://user-images.githubusercontent.com/67745456/153229300-69bd19e6-8f74-4cf4-bda6-32144e5a7a00.png)
+
+trained gan model의 generator를 이용하여 생성된 image pair로 STN을 학습시킨다. 여기서 w를 random sampled latent vector고 c는 우리가 학습할 mode latent vector이다. generator가 random으로 뽑은 image에 대해 target이 될 w의 style과 c의 appearance를 가진 image 생성을 위해 mix(c, w)를 이용하는데 본 논문에서는 style과 appearance를 쉽게 구분하여 적용하기 위해 styleGAN2의 generator를 사용하였다.
+
+![image](https://user-images.githubusercontent.com/67745456/153229456-888fa5fb-7fb0-4bd5-adef-c2561edf3c7c.png)
+
+random으로 뽑은 image를 source로 해당 style의 appearance나 pose만 다르게 만들어진 image를 target으로 STN을 학습한다.
+
+![image](https://user-images.githubusercontent.com/67745456/153229529-4c4e6b67-6cca-4670-a3f0-49270dfb3dec.png)
+
+![image](https://user-images.githubusercontent.com/67745456/153229582-654056da-f302-49e5-b950-1e334308313d.png)
+
+STN에 의한 sampling grid가 smooth한 flow를 예측하고 identity에 벗어나지 않게하기 위한 loss이다.
+
+![image](https://user-images.githubusercontent.com/67745456/153229643-3fb19e8f-1cbc-4181-83f3-8c82f8d62e96.png)
+
+c는 w의 mean과 latent space의 N개 direnctions의 weighted sum으로 나타낼 수 있고 이 weights를 학습한다.
+
+![image](https://user-images.githubusercontent.com/67745456/153230229-2bbbe4b3-9899-4df9-ba70-bb6433fe0c06.png)
+
+위의 loss를 전부 일정 비율로 합쳐 학습을 진행한다.
+
+![image](https://user-images.githubusercontent.com/67745456/153230408-9cdc6a85-044e-4dcc-b3d9-1401abd697e8.png)
+
+이때 한가지 mode c에 대해서만 학습하면 c가 점점 일반적인 object pose나 appearance로만 잘 transformation 될 수 있는 형태로 변하기 때문에 다양한 pose와 appearance를 가진 data set에 대해 적합하지 않다. 따라서 K개의 mode c를 학습시켜 각 data에 대해 자신이 가장 낮은 loss를 가질 수 있는 mode에 대해 학습시키고 clustering한다. 실제 image에 대해서 clustering할 때는 위의 loss를 계산하려면 image에 대한 latent vector를 역연산하는 과정이 필요하므로 loss를 계산하지 않고 image에 대해 가장 잘 맞는 mode를 찾기 위한 classifier(STN의 transformer weights로 initalize하고 fake image, mode set으로 학습)를 만들어 학습시키고 이를 이용하여 clustering한다.  
 
 ## II. representation learning
 ### 1. A Simple Framework for Contrastive Learning of Visual Representations
