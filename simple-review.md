@@ -544,7 +544,25 @@ style gan을 base로 AdaIn을 normalization과 modulation(scaling, biasing)으�
 
 위의 model을 효율적으로 사용하기 위해 각 point가 한 번만 network를 통과할 수 있도록 model을 근사했다.
 
+![image](https://user-images.githubusercontent.com/67745456/153416665-8434fe6c-f831-4b3a-bd44-239711a0b71e.png)
 
+NeRF의 expensive volume rendering을 효율적으로 사용하기 위해 low resolution에서 rendering하고 high resolution으로 upsampling한다.
+
+![image](https://user-images.githubusercontent.com/67745456/153419090-3859c7c5-52cb-437e-85ab-bc85dc04350c.png)
+
+기본적인 NeRF에서 aggregation을 color estimation 앞으로 빼서 각 point가 통과하는 network를 줄이고 upsampling을 진행하고 styleGAN2의 method처럼 style을 각 layer의 weights에 적용한다.
+
+![image](https://user-images.githubusercontent.com/67745456/153420676-8877426b-028f-49a6-850e-45450f286579.png)
+
+upsampling은 hand crafted method인 interpolation과 learnable 2-layer MLP를 둘 다 사용하여 진행한다.
+
+![image](https://user-images.githubusercontent.com/67745456/153421955-ed1915d2-cfc2-4a37-9d4a-a2d6b451ae49.png)
+
+original styleNeRF와 approximated styleNeRF의 결과를 random sampled point에 대해 distance를 loss로 하여 기존 NeRF model의 multi view consistency를 유지한다.
+
+![image](https://user-images.githubusercontent.com/67745456/153423037-4be56f75-dd75-4388-a57f-df5ea99eab3d.png)
+
+GAN method로 discriminator와 generator를 학습시키고 NeRF에 대해 original styleNeRF 결과를 target 삼아 학습시킨다.
 
 
 
