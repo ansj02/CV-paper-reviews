@@ -48,6 +48,14 @@ PDC-net
 
 flow estimation을 바로 하지 않고 확률로 표현 P(Y|X) confidence 표현 가능
 
+probabilistic deep learning 그냥 바로 estimation해서 wxhx2로 나타내버리면 잘못된 match들 없앨 때 잃는 정보가 많다.
+
+자주 쓰는 probabilistic model인 Laplacian model은 성능은 좋지만 inlier, outlier 구별 잘 못함->mixture model
+
+over-smoothed and overly confident predictions, unable to identify ambiguous and unreliable matching을 피하기 위해 assesses the uncertainty at a specific location (i, j), without relying on neighborhood information
+
+confidence map 형태로 rich information about matching ability of location을 
+
 ![image](https://user-images.githubusercontent.com/67745456/154492424-8a47fe7f-6ec6-4edd-a4de-843ca0a100d2.png)
 
 
@@ -78,6 +86,9 @@ GLU net  upsampling 마다 맞는 c 골라서 warp 시켜도 괜찮을 듯
 
 low resolution에서 얻은 homography matrix로 high resolution에 적용 한 번하고 다시 resolution 낮춰서 coarse to fine   flow estimation
 
+
+
+
 correlation 안하고 feature map 하나에서 key point 찾으려면 그냥 feature값 다 합친 절댓값 큰 거 찾으면 될 듯
 correlation을 row resolution에서 밖에 못쓰는 이유가 모든 pixel wise score를 전부 계산해서니까
 각 feature map에서 찾은 high feature score point에서만 correlation 연산하면 high feature map에서도 쓸 수 있지 않을까?
@@ -85,6 +96,10 @@ correlation을 row resolution에서 밖에 못쓰는 이유가 모든 pixel wise
 기존 pyramid feature map은 resolution만 다른게 아니라 다른 level의 feature들을 가짐, coarse feature map을 upscaling해서 같이 쓰면 어떨까
 
 2D image 3D model 만들면 다른 pose matched point 쉽게 찾을 수 있다.
+
+
+global, local method를 직렬로 배치하다보니 결국 한가지 방법의 의존성을 가져온다. 병렬로 처리?
+
 
 처음 homography로 매칭시키니까 처음 매칭 대상을 평면으로 가정해야하는 문제
 
