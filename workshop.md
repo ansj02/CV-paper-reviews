@@ -22,6 +22,36 @@ SuperGlue: Learning Feature Matching with Graph Neural Networks
 
 현실을 대상으로 하다보니 부드러운 등의 특징들이 있고 좀 자주 나타나는 poses가 있다
 
+![image](https://user-images.githubusercontent.com/67745456/154482100-4425869c-f32b-4db0-bdf5-691f48541490.png)
+
+attention을 transformer가 아니라 gnn으로
+
+![image](https://user-images.githubusercontent.com/67745456/154482209-d0a1cc8b-d587-4552-a6a5-72b5124ccdfe.png)
+
+attention 잘 됐고 position 정보 활용
+
+
+GLU-Net: Global-Local Universal Network for Dense Flow and Correspondences
+
+![image](https://user-images.githubusercontent.com/67745456/154482816-416f1ece-851a-4243-afa2-99e9eb21972f.png)
+
+feature extractor가 fixed pre-trained backborn이니까 결국 학습되는건 flow estimation decoder란 warp module 밖에 없음, 
+
+warp module  gangealing으로 pre training시키고 전체 fine tuning해보면?
+
+
+
+
+Learning Accurate Dense Correspondences and When to Trust Them
+
+PDC-net
+
+flow estimation을 바로 하지 않고 확률로 표현 P(Y|X) confidence 표현 가능
+
+![image](https://user-images.githubusercontent.com/67745456/154492424-8a47fe7f-6ec6-4edd-a4de-843ca0a100d2.png)
+
+
+
 
 
 pre trained feature extractor (VGG)
