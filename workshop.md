@@ -37,3 +37,6 @@ correlation을 row resolution에서 밖에 못쓰는 이유가 모든 pixel wise
 각 feature map에서 찾은 high feature score point에서만 correlation 연산하면 high feature map에서도 쓸 수 있지 않을까?
 
 기존 pyramid feature map은 resolution만 다른게 아니라 다른 level의 feature들을 가짐, coarse feature map을 upscaling해서 같이 쓰면 어떨까
+
+
+처음 homography로 매칭시키니까 처음 매칭 대상을 평면으로 가정해야하는 문제
