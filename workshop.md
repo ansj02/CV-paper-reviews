@@ -18,6 +18,10 @@ DFM: A Performance Baseline for Deep Feature Matching
 ![image](https://user-images.githubusercontent.com/67745456/154414832-0ba0ce3e-7acb-47b3-8b5c-c0ae7caa36f2.png)
 
 
+SuperGlue: Learning Feature Matching with Graph Neural Networks
+
+현실을 대상으로 하다보니 부드러운 등의 특징들이 있고 좀 자주 나타나는 poses가 있다
+
 
 
 pre trained feature extractor (VGG)
@@ -26,6 +30,9 @@ augmentation
 Hierarchical
 matual consistency
 contrastive learning   -> gangealing  어차피 pre training 할거니까 cost는 별로 상관없음, byol method 같이 쓸 수 있나? representation metric 학습과 trasformer 학습 차이 c에 모이게 하는 것도 metric으로 볼 수 있으니까
+epipolar geometry
+
+
 
 gangealing에서 pre train시킨 여러 c type STN들로 fixed STN 만들고
 GLU net  upsampling 마다 맞는 c 골라서 warp 시켜도 괜찮을 듯
@@ -47,6 +54,7 @@ correlation을 row resolution에서 밖에 못쓰는 이유가 모든 pixel wise
 
 기존 pyramid feature map은 resolution만 다른게 아니라 다른 level의 feature들을 가짐, coarse feature map을 upscaling해서 같이 쓰면 어떨까
 
+2D image 3D model 만들면 다른 pose matched point 쉽게 찾을 수 있다.
 
 처음 homography로 매칭시키니까 처음 매칭 대상을 평면으로 가정해야하는 문제
 
