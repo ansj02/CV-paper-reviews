@@ -116,5 +116,9 @@ correlation을 row resolution에서 밖에 못쓰는 이유가 모든 pixel wise
 global, local method를 직렬로 배치하다보니 결국 한가지 방법의 의존성을 가져온다. 병렬로 처리?
 
 
+
+
+global correlation map이 처음 한 번 크게 보정할 때만 쓰이니까 혼자 크게 움직인 object가 있으면 감지가 어려움 real scene은 3D이므로 object들이 다 정지해 있다고 가정해도 view에 따라 object들의 displacement가 다 다름
+
 처음 homography로 매칭시키니까 처음 매칭 대상을 평면으로 가정해야하는 문제
 
