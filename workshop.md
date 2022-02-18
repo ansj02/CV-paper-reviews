@@ -125,3 +125,32 @@ global correlation map이 처음 한 번 크게 보정할 때만 쓰이니까 �
 
 처음 homography로 매칭시키니까 처음 매칭 대상을 평면으로 가정해야하는 문제
 
+
+
+
+
+
+
+
+
+
+![image](https://user-images.githubusercontent.com/67745456/154647743-b7cad196-c4ef-4b49-9892-e7db30a826ff.png)
+
+![image](https://user-images.githubusercontent.com/67745456/154647837-f5ecd8ca-302c-4f3a-be92-39b6140bc2e3.png)
+
+![image](https://user-images.githubusercontent.com/67745456/154648086-a1800d68-eee6-4155-bc85-93c0591e79b8.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
