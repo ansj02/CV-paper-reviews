@@ -45,7 +45,7 @@ loss는 hierchical classification loss와 hierarchy properties를 이용한 repr
 기존에 Hierarchy 구조가 포함된 Mapillary Vistas 2.0 같은 데이터셋과 비교적 class 수가 20개 정도로 적은 데이터셋에 대해 임의로 상위 클래스를 만들고 지정하여 비교
 hierarcical-agnostic model에 대해서도 하위 classes score를 합쳐서 상위 class score로 하여 평가를 진행
 
-
+top down 방식이 확실히 하위 레벨에서 성능이 잘나올것 같은데 높은 레벨에서 성능이 HSSN방식과 비교했을때 못 나롱 수도 있을 것 같음 (constrain이 super가 sub을 돕는데만 쓰이니까)
 
 
 
