@@ -40,7 +40,7 @@
 
 기존의 구조들에 대해 class 구조만 tree 형태로 사용하고 그에 맞는 costraint와 loss만 바꿔서 사용할 수 있음
 (기존의 hierarchical model들은 hierarchical class assignment를 위해 기존 model의 구조를 크게 바꾸거나 object 세부 분할에만 초점을 두고 있다고 한다(like person part task))
-loss는 hierchical classification loss와 hierarchy properties를 이용한 representation loss를 이용하여 학습하고
+loss는 hierchical classification loss(일종의 contrastive loss (negative는 멀고 positive는 가깝게) + tree constraint)와 hierarchy properties를 이용한 representation loss를 이용하여 학습하고
 비교는 기존의 성능 잘나오는 hierarchical-agnostic models (maskformer ...) 들과 비교 (다른 hierchical model들은 구조를 크게 바꿔서 비교가 불가, person part task에서는 비교했을 수도 있는데 확인 필요)
 기존에 Hierarchy 구조가 포함된 Mapillary Vistas 2.0 같은 데이터셋과 비교적 class 수가 20개 정도로 적은 데이터셋에 대해 임의로 상위 클래스를 만들고 지정하여 비교
 hierarcical-agnostic model에 대해서도 하위 classes score를 합쳐서 상위 class score로 하여 평가를 진행
